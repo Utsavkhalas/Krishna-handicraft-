@@ -1,6 +1,6 @@
 <?php
-	// use PHPMailer\PHPMailer\PHPMailer;
-	// use PHPMailer\PHPMailer\Exception;
+	use PHPMailer\PHPMailer\PHPMailer;
+	use PHPMailer\PHPMailer\Exception;
 
 	include 'includes/session.php';
 
@@ -15,21 +15,21 @@
 		$_SESSION['lastname'] = $lastname;
 		$_SESSION['email'] = $email;
 
-		// if(!isset($_SESSION['captcha'])){
-		// 	require('recaptcha/src/autoload.php');		
-		// 	$recaptcha = new \ReCaptcha\ReCaptcha('6LevO1IUAAAAAFCCiOHERRXjh3VrHa5oywciMKcw', new \ReCaptcha\RequestMethod\SocketPost());
-		// 	$resp = $recaptcha->verify($_POST['g-recaptcha-response'], $_SERVER['REMOTE_ADDR']);
+		if(!isset($_SESSION['captcha'])){
+			require('recaptcha/src/autoload.php');		
+			$recaptcha = new \ReCaptcha\ReCaptcha('6LevO1IUAAAAAFCCiOHERRXjh3VrHa5oywciMKcw', new \ReCaptcha\RequestMethod\SocketPost());
+			$resp = $recaptcha->verify($_POST['g-recaptcha-response'], $_SERVER['REMOTE_ADDR']);
 
-		// 	if (!$resp->isSuccess()){
-		//   		$_SESSION['error'] = 'Please answer recaptcha correctly';
-		//   		header('location: signup.php');	
-		//   		exit();	
-		//   	}	
-		//   	else{
-		//   		$_SESSION['captcha'] = time() + (10*60);
-		//   	}
+			if (!$resp->isSuccess()){
+		  		$_SESSION['error'] = 'Please answer recaptcha correctly';
+		  		header('location: signup.php');	
+		  		exit();	
+		  	}	
+		  	else{
+		  		$_SESSION['captcha'] = time() + (10*60);
+		  	}
 
-		// }
+		}
 # modify
 		if($password != $repassword){
 			$_SESSION['error'] = 'Passwords did not match';
